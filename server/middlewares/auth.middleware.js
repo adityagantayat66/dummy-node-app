@@ -17,7 +17,7 @@ export function isAuthenticated(req, res, next)
                 return res.status(401).send('You are not Authenticated. Please login');        
             }
             req.user = decodedToken;
-            next();
+            next()
         })
     }
 }
