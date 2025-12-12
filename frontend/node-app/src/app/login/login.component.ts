@@ -41,8 +41,7 @@ export class LoginComponent {
       .subscribe((data)=>{
         if(data && data.success)
         {
-          console.log(data.token);
-          localStorage.setItem('access_id', data.token);
+          this._authService.storeToken(data.token);
           this._authService.testMiddleware().pipe(take(1))
           .subscribe((data)=>{
             console.log(data)
