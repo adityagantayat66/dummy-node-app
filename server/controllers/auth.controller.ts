@@ -61,7 +61,6 @@ export async function register(req: Request, res: Response): Promise<void>
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         all_users.set(email, {email, fullName, age, password: hashedPassword, _id})
-        console.log(all_users.get(email));
         status = 201;
         data = {'id': _id, 'success': true};
     }
