@@ -3,10 +3,12 @@ import { JWT_SECRET } from "../providers/data.js";
 
 export function isAuthenticated(req, res, next)
 {
-    const token = req.headers['Authorisation']?.split(' ')[1];
+    const token = req.headers.authorization.split(' ')[1];
+
     if(!token?.length)
     {
-        return res.status(401).send('You are not Authenticated. Please login');
+        console.log('length check')
+        return res.status(401).send(token);
     }
     else
     {
@@ -17,6 +19,7 @@ export function isAuthenticated(req, res, next)
                 return res.status(401).send('You are not Authenticated. Please login');        
             }
             req.user = decodedToken;
+            console.log('here');
             next()
         })
     }

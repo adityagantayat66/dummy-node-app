@@ -17,8 +17,8 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent {
   loginForm = new FormGroup({
-    email: new FormControl('',[Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+    email: new FormControl('adi@mail.com',[Validators.required, Validators.email]),
+    password: new FormControl('qwertyu', [Validators.required, Validators.minLength(6)])
   });
   serverError= '';
   constructor(private _authService: AuthService)
@@ -43,6 +43,10 @@ export class LoginComponent {
         {
           console.log(data.token);
           localStorage.setItem('access_id', data.token);
+          this._authService.testMiddleware().pipe(take(1))
+          .subscribe((data)=>{
+            console.log(data)
+          });
         }
       })
   }

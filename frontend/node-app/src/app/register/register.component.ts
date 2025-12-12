@@ -20,10 +20,10 @@ import { Router } from '@angular/router';
 export class RegisterComponent
 {
   registerForm = new FormGroup({
-    fullName: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    age: new FormControl('', [Validators.required]),
-    email: new FormControl('',[Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    fullName: new FormControl('aditya', [Validators.required, Validators.minLength(6)]),
+    age: new FormControl('28', [Validators.required]),
+    email: new FormControl('adi@mail.com',[Validators.required, Validators.email]),
+    password: new FormControl('qwertyu', [Validators.required, Validators.minLength(6)]),
   });
   serverError= '';
   constructor(private _authService: AuthService,

@@ -8,11 +8,11 @@ export function tokenInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
       )
   {
     let accessToken = localStorage.getItem('access_id');
+    console.log(accessToken)
     req = req.clone({
       setHeaders: {
-        Authorisation: `Bearer ${accessToken}`
-      },
-      withCredentials: true
+        Authorization: `Bearer ${accessToken}`
+      }
     })
   }
   return next(req);
