@@ -21,8 +21,9 @@ export class AuthService {
   {
     return this._http.get('http://localhost:5000/api/test');
   }
-  storeToken(token: string): void
+  storeToken(data: any): void
   {
-    localStorage.setItem('access_id', token);
+    localStorage.setItem('access_id', data.token);
+    localStorage.setItem('role', data.role)
   }
 }

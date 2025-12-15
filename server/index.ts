@@ -5,6 +5,8 @@ import multer from 'multer';
 import dotenv from 'dotenv';
 import { login, register } from './controllers/auth.controller.js';
 import {isAuthenticated} from './middlewares/auth.middleware.js';
+import { all_users } from './providers/data.js';
+import { fetchUserData } from './controllers/dashboard.controller.js';
 
 //? set up server
 dotenv.config();
@@ -26,6 +28,7 @@ app.post('/api/register', register);
 app.get('/api/test', isAuthenticated, (req, res)=>{
     res.status(200).json('successful');
 })
+app.get('/api/getDashboardData', isAuthenticated, fetchUserData)
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);
   });

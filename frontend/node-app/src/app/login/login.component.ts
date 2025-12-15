@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { take } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,10 @@ export class LoginComponent {
     password: new FormControl('qwertyu', [Validators.required, Validators.minLength(6)])
   });
   serverError= '';
-  constructor(private _authService: AuthService)
+  constructor(
+    private _authService: AuthService,
+    private _router: Router
+  )
   {
 
   }
@@ -41,11 +45,13 @@ export class LoginComponent {
       .subscribe((data)=>{
         if(data && data.success)
         {
-          this._authService.storeToken(data.token);
-          this._authService.testMiddleware().pipe(take(1))
-          .subscribe((data)=>{
-            console.log(data)
-          });
+          this._authService.storeToken(data);
+          this._router.navigate(['dashboard'])
+          // this._authService.testMiddleware().pipe(take(1))
+          // .subscribe((data)=>{
+          //   console.log(data)
+          // });
+
         }
       })
   }

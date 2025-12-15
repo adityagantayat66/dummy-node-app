@@ -2,45 +2,55 @@ import type { Request, Response } from "express";
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { all_users, JWT_SECRET } from "../providers/data.js";
+import { adminDetails, all_users, JWT_SECRET } from "../providers/data.js";
 
 export async function login(req: Request, res: Response): Promise<void>
 {
     let status = 200;
     let data;
     const payload = req.body;
-    if(!all_users.has(payload.email))
+    const isAdminMail = payload.email.includes('admin');
+    const role = isAdminMail ? 'maalik' : 'majdoor';
+    if(!isAdminMail && !all_users.has(payload.email))
     {
         status = 404;
         data = 'User not found. Please register'
     }
     else
     {
-        const hash = all_users.get(payload.email)?.password || '';
-        const isMatch = await bcrypt.compare(payload.password, hash);
-        if(!isMatch)
+        if(!isAdminMail)
         {
-            status = 500;
-            data = "Password is incorrect."
+            const hash = all_users.get(payload.email)?.password || '';
+            const isMatch = await bcrypt.compare(payload.password, hash);
+            if(!isMatch)
+            {
+                status = 500;
+                data = "Password is incorrect."
+            }
         }
         else
         {
-            const token = jwt.sign({email: payload.email, role: 'user'}, JWT_SECRET,{
-                expiresIn: '15m'
-            });
-            status = 200;
-            data = {token, 'success': true};
+            if(payload.email !== adminDetails.email || payload.password !== adminDetails.password)
+            {
+                status = 500;
+                data = "Incorrect credentials"
+            }
         }
+        const token = jwt.sign({email: payload.email, role}, JWT_SECRET,{
+            expiresIn: '15m'
+        });
+        status = 200;
+        data = {token, 'success': true, role};
     }
     res.status(status).json(data);
 }
 
 export async function register(req: Request, res: Response): Promise<void>
 {
-    let status = 200;
+    let status = 201;
     let data;
     const {email, fullName, age, password} = req.body;
-    if(!email.length || !fullName.length || !age.length || !password.length)
+    if(!email?.length || !fullName?.length || !age?.length || !password?.length)
     {
         status = 422;
         data = 'All fields are required.'

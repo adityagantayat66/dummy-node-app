@@ -1,0 +1,14 @@
+
+@if(currentRole === 'majdoor')
+{
+  <div>Welcome to dehadi, {{serverData.fullName}}</div>
+  <p>Email: {{serverData.email}}</p>
+  <p>Full Name: {{serverData.fullName}}</p>
+  <p>Age: {{serverData.age}}</p>
+  <p>Your Role: {{serverData.role}}</p>
+}
+@else
+{
+  Namaste Maalik!
+  {{serverData[0].fullName}}
+}
