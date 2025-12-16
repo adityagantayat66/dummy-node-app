@@ -10,7 +10,7 @@ export async function login(req: Request, res: Response): Promise<void>
     let data;
     const payload = req.body;
     const isAdminMail = payload.email.includes('admin');
-    const role = isAdminMail ? 'maalik' : 'majdoor';
+    const role = isAdminMail ? 1 : 0;
     if(!isAdminMail && !all_users.has(payload.email))
     {
         status = 404;

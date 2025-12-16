@@ -6,7 +6,7 @@ export const fetchUserData = (req: Request, res: Response) =>
     let status = 200;
     let data;
     const userData = res.locals.user;
-    if(userData.role === 'majdoor')
+    if(userData.role === 0)
     {
         const details = all_users.get(userData.email);
         if(details)
