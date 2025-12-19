@@ -1,13 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import {MatTableModule} from '@angular/material/table';
+import { MatButtonModule } from "@angular/material/button";
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatButtonModule],
   providers: [DashboardService],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -17,7 +19,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   serverData: any;
   currentRole: number;
   displayedColumns: string[];
-  constructor(private _activatedRoute: ActivatedRoute)
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _router: Router,
+              private _authService: AuthService,
+            )
   {
     this.endSubscription = new Subject<void>();
     this.serverData = {};
@@ -40,4 +45,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.endSubscription.complete();
   }
 
+  handleLogout(): void
+  {
+    this._authService.logout();
+    this._router.navigate(['login']);
+  }
 }

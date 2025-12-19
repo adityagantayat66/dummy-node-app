@@ -6,6 +6,15 @@
   color: gray;
   text-align: center;
   padding: 20px;
+  display: flex;
+  // justify-content: center;
+  gap: 2rem;
+}
+.welcome-title{
+  flex: 1;
+}
+.logout-btn{
+  margin-right: 2rem;
 }
 .username{
   color: teal;
@@ -47,4 +56,12 @@
 .table-data{
   margin-top: 24px;
   border-radius: 10px;
+}
+.zero-user{
+  padding: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48px;
 }

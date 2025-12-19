@@ -26,4 +26,8 @@ export class AuthService {
     localStorage.setItem('access_id', data.token);
     localStorage.setItem('role', data.role)
   }
+  logout(): void
+  {
+    localStorage.clear();
+  }
 }

@@ -24,7 +24,7 @@ export const fetchUserData = (req: Request, res: Response) =>
     {
         if(!all_users.size)
         {
-            data = "Koi majdoor nahi register hua h."
+            data = []
         }
         else
         {

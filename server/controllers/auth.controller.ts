@@ -2,13 +2,14 @@ import type { Request, Response } from "express";
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { adminDetails, all_users, JWT_SECRET } from "../providers/data.js";
+import { all_users } from "../providers/data.js";
 
 export async function login(req: Request, res: Response): Promise<void>
 {
     let status = 200;
     let data;
     const payload = req.body;
+    const adminDetails = {email: process.env.ADMIN_MAIL, password: process.env.ADMIN_PW}
     const isAdminMail = payload.email.includes('admin');
     const role = isAdminMail ? 1 : 0;
     if(!isAdminMail && !all_users.has(payload.email))
@@ -36,7 +37,7 @@ export async function login(req: Request, res: Response): Promise<void>
                 data = "Incorrect credentials"
             }
         }
-        const token = jwt.sign({email: payload.email, role}, JWT_SECRET,{
+        const token = jwt.sign({email: payload.email, role}, `${process.env.JWT_SECRET}`,{
             expiresIn: '15m'
         });
         status = 200;

@@ -6,17 +6,17 @@
       </div>
 
       <div class="form-fields">
-      <mat-form-field class="no-appearance">
+      <mat-form-field appearance="outline">
           <input matInput placeholder="Enter your Email" formControlName="email" (focus)="removeServerError()">
-          <mat-icon matSuffix class="secondary-text">mail</mat-icon>
+          <mat-icon matSuffix>mail</mat-icon>
           <mat-error *ngIf="loginForm.get('email')?.invalid">
                  email is required
           </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="no-appearance">
+      <mat-form-field appearance="outline">
           <input matInput  placeholder="Enter your Password" type="password" formControlName="password">
-          <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+          <mat-icon matSuffix>vpn_key</mat-icon>
           <mat-error *ngIf="loginForm.get('password')?.invalid ">
               Enter Your Password
           </mat-error>

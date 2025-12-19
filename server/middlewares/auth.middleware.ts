@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from "../providers/data.js";
 import type { NextFunction, Request, Response } from 'express';
 
 export function isAuthenticated(req: Request, res: Response, next: NextFunction)
@@ -12,7 +11,7 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
     }
     else
     {
-        jwt.verify(token, JWT_SECRET, (err, decodedToken) =>
+        jwt.verify(token, `${process.env.JWT_SECRET}`, (err, decodedToken) =>
         {
             if(err)
             {
